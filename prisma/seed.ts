@@ -186,6 +186,50 @@ async function main() {
   const posts = await Promise.all([
     prisma.post.create({
       data: {
+        userId: voltaire.id,
+        content:
+          'Рим, Петербург, Париж — камень не лжёт. Цивилизацию измеряют не законами, а тем, что остаётся после их забвения. Я объездил достаточно, чтобы знать: архитектура — единственная философия, доступная всем.',
+        images: [
+          'https://res.cloudinary.com/dcposai6j/image/upload/v1778800572/Rom__IT__Kolosseum__-__2024__-__0610_oi1mkm.jpg',
+          'https://res.cloudinary.com/dcposai6j/image/upload/v1778800469/235817291_zvhkc0.jpg',
+          'https://res.cloudinary.com/dcposai6j/image/upload/v1778800470/gotica-8_ee8grj.jpg',
+          'https://res.cloudinary.com/dcposai6j/image/upload/v1778800470/756270648259822_nxrahc.jpg',
+        ],
+      },
+    }),
+    prisma.post.create({
+      data: {
+        userId: epictetus.id,
+        content:
+          'Мудрец не раб желудка. Десерт, рыба, специи — всё это лишь материя. Но если ты не можешь отказаться от сладкого, как ты откажешься от страха, гнева и тщеславия? Начни с тарелки.',
+        images: [
+          'https://res.cloudinary.com/dcposai6j/image/upload/v1777206596/samples/food/dessert.jpg',
+          'https://res.cloudinary.com/dcposai6j/image/upload/v1777206597/samples/food/fish-vegetables.jpg',
+          'https://res.cloudinary.com/dcposai6j/image/upload/v1777206602/samples/food/spices.jpg',
+        ],
+      },
+    }),
+    prisma.post.create({
+      data: {
+        userId: machiavelli.id,
+        content:
+          'Государь должен выглядеть так, чтобы внушать уважение прежде, чем откроет рот. Хорошая кожа и быстрый экипаж — не роскошь, а инструмент власти.',
+        images: [
+          'https://res.cloudinary.com/dcposai6j/image/upload/v1777206601/samples/ecommerce/leather-bag-gray.jpg',
+          'https://res.cloudinary.com/dcposai6j/image/upload/v1777206601/samples/ecommerce/car-interior-design.jpg',
+        ],
+      },
+    }),
+    prisma.post.create({
+      data: {
+        userId: descartes.id,
+        content:
+          'Cogito, ergo sum — но всё же я задаюсь вопросом: что из этих вещей существует на самом деле, а что лишь в моём воображении? Протяжённость и форма — вот что неопровержимо. Остальное — иллюзия чувств.',
+        images: ['https://res.cloudinary.com/dcposai6j/image/upload/v1777206601/samples/ecommerce/accessories-bag.jpg'],
+      },
+    }),
+    prisma.post.create({
+      data: {
         userId: seneca.id,
         content:
           'Человек, которого застеклённые окна защищали от малейшего дуновения, подвергается смертельной опасности, даже если его коснётся самый лёгкий ветерок.',
