@@ -1,0 +1,190 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum NotificationType {
+  LIKE
+  FOLLOW
+  COMMENT
+}
+
+enum ReportReason {
+  SPAM
+  FRAUD
+  HARASSMENT
+  VIOLENCE
+  SHOCKING
+  EXPLICIT
+}
+
+enum ReportStatus {
+  PENDING
+  RESOLVED
+  DISMISSED
+}
+
+model User {
+  id                    Int            @id @default(autoincrement())
+  role                  Role           @default(USER)
+  username              String         @db.VarChar(50)
+  tag                   String         @unique @db.VarChar(30)
+  email                 String         @unique @db.VarChar(254)
+  passwordHash          String         @map("password_hash") @db.VarChar(256)
+  avatar                String         @default("default.jpg") @db.VarChar(500)
+  coverImage            String?        @map("cover_image") @db.VarChar(500)
+  bio                   String?        @db.VarChar(160)
+  createdAt             DateTime       @default(now()) @map("created_at")
+  posts                 Post[]
+  comments              Comment[]
+  likes                 Like[]
+  followers             Follow[]       @relation("follower")
+  following             Follow[]       @relation("following")
+  notificationsReceived Notification[] @relation("notificationRecipient")
+  notificationsSent     Notification[] @relation("notificationActor")
+  sentMessages          Message[]      @relation("messageSender")
+  chatsAsUser1          Chat[]         @relation("chatUser1")
+  chatsAsUser2          Chat[]         @relation("chatUser2")
+  reports               Report[]       @relation("reportReporter")
+
+  @@map("users")
+}
+
+model Post {
+  id            Int            @id @default(autoincrement())
+  userId        Int            @map("user_id")
+  content       String         @db.VarChar(2000)
+  images        String[]       @default([])
+  createdAt     DateTime       @default(now()) @map("created_at")
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comments      Comment[]
+  likes         Like[]
+  notifications Notification[]
+  reports       Report[]
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("posts")
+}
+
+model Comment {
+  id            Int            @id @default(autoincrement())
+  postId        Int            @map("post_id")
+  userId        Int            @map("user_id")
+  content       String         @db.VarChar(1000)
+  createdAt     DateTime       @default(now()) @map("created_at")
+  post          Post           @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  notifications Notification[]
+  reports       Report[]
+
+  @@index([postId, createdAt])
+  @@index([userId])
+  @@map("comments")
+}
+
+model Like {
+  postId    Int      @map("post_id")
+  userId    Int      @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([postId, userId])
+  @@index([userId])
+  @@map("likes")
+}
+
+model Follow {
+  followerId  Int      @map("follower_id")
+  followingId Int      @map("following_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  follower    User     @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User     @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@id([followerId, followingId])
+  @@index([followingId])
+  @@map("follows")
+}
+
+model Notification {
+  id          Int              @id @default(autoincrement())
+  recipientId Int              @map("recipient_id")
+  actorId     Int              @map("actor_id")
+  type        NotificationType
+  postId      Int?             @map("post_id")
+  commentId   Int?             @map("comment_id")
+  isRead      Boolean          @default(false) @map("is_read")
+  createdAt   DateTime         @default(now()) @map("created_at")
+  recipient   User             @relation("notificationRecipient", fields: [recipientId], references: [id], onDelete: Cascade)
+  actor       User             @relation("notificationActor", fields: [actorId], references: [id], onDelete: Cascade)
+  post        Post?            @relation(fields: [postId], references: [id], onDelete: Cascade)
+  comment     Comment?         @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@unique([recipientId, actorId, type, postId, commentId])
+  @@index([recipientId, isRead, createdAt])
+  @@index([actorId, createdAt])
+  @@index([postId])
+  @@index([commentId])
+  @@map("notifications")
+}
+
+model Chat {
+  id        Int       @id @default(autoincrement())
+  user1Id   Int       @map("user1_id")
+  user2Id   Int       @map("user2_id")
+  createdAt DateTime  @default(now()) @map("created_at")
+  user1     User      @relation("chatUser1", fields: [user1Id], references: [id], onDelete: Cascade)
+  user2     User      @relation("chatUser2", fields: [user2Id], references: [id], onDelete: Cascade)
+  messages  Message[]
+
+  @@unique([user1Id, user2Id])
+  @@index([user2Id])
+  @@map("chats")
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  chatId    Int      @map("chat_id")
+  senderId  Int      @map("sender_id")
+  content   String   @db.VarChar(2000)
+  isRead    Boolean  @default(false) @map("is_read")
+  createdAt DateTime @default(now()) @map("created_at")
+  chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  sender    User     @relation("messageSender", fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@index([chatId, createdAt])
+  @@index([senderId])
+  @@map("messages")
+}
+
+model Report {
+  id          Int          @id @default(autoincrement())
+  reporterId  Int          @map("reporter_id")
+  postId      Int?         @map("post_id")
+  commentId   Int?         @map("comment_id")
+  reason      ReportReason
+  status      ReportStatus @default(PENDING)
+  createdAt   DateTime     @default(now()) @map("created_at")
+  resolvedAt  DateTime?    @map("resolved_at")
+  reporter    User         @relation("reportReporter", fields: [reporterId], references: [id], onDelete: Cascade)
+  post        Post?        @relation(fields: [postId], references: [id], onDelete: Cascade)
+  comment     Comment?     @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@unique([reporterId, postId])
+  @@unique([reporterId, commentId])
+  @@index([status, createdAt])
+  @@map("reports")
+}
