@@ -2,21 +2,20 @@ import { PrismaClient, Role } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
-
-const CDN = 'https://res.cloudinary.com/dcposai6j/image/upload';
+//res.cloudinary.com/dcposai6j/image/upload
 const avatars = {
-  default:     `${CDN}/v1778799272/default_zjntnx.png`,
-  seneka:      `${CDN}/v1778799271/seneka_jlykel.png`,
-  epictetus:   `${CDN}/v1778799272/epictetus_sybxnh.jpg`,
-  kaligula:    `${CDN}/v1778799271/kaligula_fwyxhk.png`,
-  decart:      `${CDN}/v1778799271/decart_ffzm8s.jpg`,
-  hume:        `${CDN}/v1778799271/hume_vaebit.jpg`,
-  john_lokk:   `${CDN}/v1778799271/john_lokk_rtks0r.jpg`,
-  leibniz:     `${CDN}/v1778799272/leibniz_gbpqjv.jpg`,
-  makiavelli:  `${CDN}/v1778799272/makiavelli_pftshb.jpg`,
+  default: `${CDN}/v1778799272/default_zjntnx.png`,
+  seneka: `${CDN}/v1778799271/seneka_jlykel.png`,
+  epictetus: `${CDN}/v1778799272/epictetus_sybxnh.jpg`,
+  kaligula: `${CDN}/v1778799271/kaligula_fwyxhk.png`,
+  decart: `${CDN}/v1778799271/decart_ffzm8s.jpg`,
+  hume: `${CDN}/v1778799271/hume_vaebit.jpg`,
+  john_lokk: `${CDN}/v1778799271/john_lokk_rtks0r.jpg`,
+  leibniz: `${CDN}/v1778799272/leibniz_gbpqjv.jpg`,
+  makiavelli: `${CDN}/v1778799272/makiavelli_pftshb.jpg`,
   montesquieu: `${CDN}/v1778799272/montesquieu_cy288z.jpg`,
-  russo:       `${CDN}/v1778799272/russo_uji2iy.jpg`,
-  volter:      `${CDN}/v1778799272/volter_ofmfla.jpg`,
+  russo: `${CDN}/v1778799272/russo_uji2iy.jpg`,
+  volter: `${CDN}/v1778799272/volter_ofmfla.jpg`,
 };
 
 async function main() {
@@ -183,35 +182,217 @@ async function main() {
     },
   });
 
-  await prisma.post.create({ data: { userId: voltaire.id, content: 'Рим, Петербург, Париж — камень не лжёт. Цивилизацию измеряют не законами, а тем, что остаётся после их забвения. Я объездил достаточно, чтобы знать: архитектура — единственная философия, доступная всем.', images: ['https://res.cloudinary.com/dcposai6j/image/upload/v1778800572/Rom__IT__Kolosseum__-__2024__-__0610_oi1mkm.jpg','https://res.cloudinary.com/dcposai6j/image/upload/v1778800469/235817291_zvhkc0.jpg','https://res.cloudinary.com/dcposai6j/image/upload/v1778800470/gotica-8_ee8grj.jpg','https://res.cloudinary.com/dcposai6j/image/upload/v1778800470/756270648259822_nxrahc.jpg'] } });
-  await prisma.post.create({ data: { userId: epictetus.id, content: 'Мудрец не раб желудка. Десерт, рыба, специи — всё это лишь материя. Но если ты не можешь отказаться от сладкого, как ты откажешься от страха, гнева и тщеславия? Начни с тарелки.', images: ['https://res.cloudinary.com/dcposai6j/image/upload/v1777206596/samples/food/dessert.jpg','https://res.cloudinary.com/dcposai6j/image/upload/v1777206597/samples/food/fish-vegetables.jpg','https://res.cloudinary.com/dcposai6j/image/upload/v1777206602/samples/food/spices.jpg'] } });
-  await prisma.post.create({ data: { userId: machiavelli.id, content: 'Государь должен выглядеть так, чтобы внушать уважение прежде, чем откроет рот. Хорошая кожа и быстрый экипаж — не роскошь, а инструмент власти.', images: ['https://res.cloudinary.com/dcposai6j/image/upload/v1777206601/samples/ecommerce/leather-bag-gray.jpg','https://res.cloudinary.com/dcposai6j/image/upload/v1777206601/samples/ecommerce/car-interior-design.jpg'] } });
-  await prisma.post.create({ data: { userId: descartes.id, content: 'Cogito, ergo sum — но всё же я задаюсь вопросом: что из этих вещей существует на самом деле, а что лишь в моём воображении? Протяжённость и форма — вот что неопровержимо. Остальное — иллюзия чувств.', images: ['https://res.cloudinary.com/dcposai6j/image/upload/v1777206601/samples/ecommerce/accessories-bag.jpg'] } });
+  await prisma.post.create({
+    data: {
+      userId: voltaire.id,
+      content:
+        'Рим, Петербург, Париж — камень не лжёт. Цивилизацию измеряют не законами, а тем, что остаётся после их забвения. Я объездил достаточно, чтобы знать: архитектура — единственная философия, доступная всем.',
+      images: [
+        'https://res.cloudinary.com/dcposai6j/image/upload/v1778800572/Rom__IT__Kolosseum__-__2024__-__0610_oi1mkm.jpg',
+        'https://res.cloudinary.com/dcposai6j/image/upload/v1778800469/235817291_zvhkc0.jpg',
+        'https://res.cloudinary.com/dcposai6j/image/upload/v1778800470/gotica-8_ee8grj.jpg',
+        'https://res.cloudinary.com/dcposai6j/image/upload/v1778800470/756270648259822_nxrahc.jpg',
+      ],
+    },
+  });
+  await prisma.post.create({
+    data: {
+      userId: epictetus.id,
+      content:
+        'Мудрец не раб желудка. Десерт, рыба, специи — всё это лишь материя. Но если ты не можешь отказаться от сладкого, как ты откажешься от страха, гнева и тщеславия? Начни с тарелки.',
+      images: [
+        'https://res.cloudinary.com/dcposai6j/image/upload/v1777206596/samples/food/dessert.jpg',
+        'https://res.cloudinary.com/dcposai6j/image/upload/v1777206597/samples/food/fish-vegetables.jpg',
+        'https://res.cloudinary.com/dcposai6j/image/upload/v1777206602/samples/food/spices.jpg',
+      ],
+    },
+  });
+  await prisma.post.create({
+    data: {
+      userId: machiavelli.id,
+      content:
+        'Государь должен выглядеть так, чтобы внушать уважение прежде, чем откроет рот. Хорошая кожа и быстрый экипаж — не роскошь, а инструмент власти.',
+      images: [
+        'https://res.cloudinary.com/dcposai6j/image/upload/v1777206601/samples/ecommerce/leather-bag-gray.jpg',
+        'https://res.cloudinary.com/dcposai6j/image/upload/v1777206601/samples/ecommerce/car-interior-design.jpg',
+      ],
+    },
+  });
+  await prisma.post.create({
+    data: {
+      userId: descartes.id,
+      content:
+        'Cogito, ergo sum — но всё же я задаюсь вопросом: что из этих вещей существует на самом деле, а что лишь в моём воображении? Протяжённость и форма — вот что неопровержимо. Остальное — иллюзия чувств.',
+      images: [
+        'https://res.cloudinary.com/dcposai6j/image/upload/v1777206601/samples/ecommerce/accessories-bag.jpg',
+      ],
+    },
+  });
 
-  const senecaPost1 = await prisma.post.create({ data: { userId: seneca.id, content: 'Человек, которого застеклённые окна защищали от малейшего дуновения, подвергается смертельной опасности, даже если его коснётся самый лёгкий ветерок.' } });
-  const senecaPost2 = await prisma.post.create({ data: { userId: seneca.id, content: 'Говорят, что Гай Цезарь отличался помимо прочих немалочисленных своих пороков каким-то удивительным сладострастием в оскорблениях.' } });
-  const senecaPost3 = await prisma.post.create({ data: { userId: seneca.id, content: 'Измени своё мнение, если оно ошибочно.' } });
-  const epictetusPost1 = await prisma.post.create({ data: { userId: epictetus.id, content: 'Не тот беден, кто имеет мало, а тот, кто хочет иметь больше.' } });
-  const epictetusPost2 = await prisma.post.create({ data: { userId: epictetus.id, content: 'Познай самого себя.' } });
-  const caligulaPost1 = await prisma.post.create({ data: { userId: caligula.id, content: 'Счастье вашей жизни зависит от качества ваших мыслей.' } });
-  const descartesPost1 = await prisma.post.create({ data: { userId: descartes.id, content: 'Cogito, ergo sum. Мыслю, следовательно, существую.' } });
-  const descartesPost2 = await prisma.post.create({ data: { userId: descartes.id, content: 'Чтобы найти истину, необходимо хоть раз в жизни усомниться во всём, насколько это возможно.' } });
-  const humePost1 = await prisma.post.create({ data: { userId: hume.id, content: 'Привычка — великий руководитель в человеческой жизни. Только она делает наш опыт полезным.' } });
-  const humePost2 = await prisma.post.create({ data: { userId: hume.id, content: 'Разум есть и должен быть лишь рабом страстей.' } });
-  const lockePost1 = await prisma.post.create({ data: { userId: locke.id, content: 'Все люди по природе равны и свободны. Никто не может лишить другого жизни, здоровья, свободы или собственности.' } });
-  const lockePost2 = await prisma.post.create({ data: { userId: locke.id, content: 'Ум подобен чистому листу — опыт пишет на нём.' } });
-  const leibnizPost1 = await prisma.post.create({ data: { userId: leibniz.id, content: 'Мы живём в лучшем из возможных миров.' } });
-  const leibnizPost2 = await prisma.post.create({ data: { userId: leibniz.id, content: 'Настоящее чревато будущим, а прошлое присутствует в настоящем.' } });
-  const machiavelliPost1 = await prisma.post.create({ data: { userId: machiavelli.id, content: 'Лучше, чтобы тебя боялись, чем любили — если уж нельзя совместить и то и другое.' } });
-  const machiavelliPost2 = await prisma.post.create({ data: { userId: machiavelli.id, content: 'Цель оправдывает средства, но не всегда оправдывает того, кто их выбрал.' } });
-  const montesquieuPost1 = await prisma.post.create({ data: { userId: montesquieu.id, content: 'Чтобы не злоупотребляли властью, необходим такой порядок вещей, при котором различные власти могли бы взаимно сдерживать друг друга.' } });
-  const montesquieuPost2 = await prisma.post.create({ data: { userId: montesquieu.id, content: 'Свобода есть право делать всё, что дозволено законами.' } });
-  const rousseauPost1 = await prisma.post.create({ data: { userId: rousseau.id, content: 'Человек рождается свободным, но повсюду он в оковах.' } });
-  const rousseauPost2 = await prisma.post.create({ data: { userId: rousseau.id, content: 'Природа создала человека счастливым и добрым, но общество искажает его и делает несчастным.' } });
-  const voltairePost1 = await prisma.post.create({ data: { userId: voltaire.id, content: 'Я не согласен с тем, что вы говорите, но готов умереть за ваше право это говорить.' } });
-  const voltairePost2 = await prisma.post.create({ data: { userId: voltaire.id, content: 'Здравый смысл — не такая уж распространённая вещь.' } });
+  const senecaPost1 = await prisma.post.create({
+    data: {
+      userId: seneca.id,
+      content:
+        'Человек, которого застеклённые окна защищали от малейшего дуновения, подвергается смертельной опасности, даже если его коснётся самый лёгкий ветерок.',
+    },
+  });
+  const senecaPost2 = await prisma.post.create({
+    data: {
+      userId: seneca.id,
+      content:
+        'Говорят, что Гай Цезарь отличался помимо прочих немалочисленных своих пороков каким-то удивительным сладострастием в оскорблениях.',
+    },
+  });
+  const senecaPost3 = await prisma.post.create({
+    data: {
+      userId: seneca.id,
+      content: 'Измени своё мнение, если оно ошибочно.',
+    },
+  });
+  const epictetusPost1 = await prisma.post.create({
+    data: {
+      userId: epictetus.id,
+      content: 'Не тот беден, кто имеет мало, а тот, кто хочет иметь больше.',
+    },
+  });
+  const epictetusPost2 = await prisma.post.create({
+    data: { userId: epictetus.id, content: 'Познай самого себя.' },
+  });
+  const caligulaPost1 = await prisma.post.create({
+    data: {
+      userId: caligula.id,
+      content: 'Счастье вашей жизни зависит от качества ваших мыслей.',
+    },
+  });
+  const descartesPost1 = await prisma.post.create({
+    data: {
+      userId: descartes.id,
+      content: 'Cogito, ergo sum. Мыслю, следовательно, существую.',
+    },
+  });
+  const descartesPost2 = await prisma.post.create({
+    data: {
+      userId: descartes.id,
+      content:
+        'Чтобы найти истину, необходимо хоть раз в жизни усомниться во всём, насколько это возможно.',
+    },
+  });
+  const humePost1 = await prisma.post.create({
+    data: {
+      userId: hume.id,
+      content:
+        'Привычка — великий руководитель в человеческой жизни. Только она делает наш опыт полезным.',
+    },
+  });
+  const humePost2 = await prisma.post.create({
+    data: {
+      userId: hume.id,
+      content: 'Разум есть и должен быть лишь рабом страстей.',
+    },
+  });
+  const lockePost1 = await prisma.post.create({
+    data: {
+      userId: locke.id,
+      content:
+        'Все люди по природе равны и свободны. Никто не может лишить другого жизни, здоровья, свободы или собственности.',
+    },
+  });
+  const lockePost2 = await prisma.post.create({
+    data: {
+      userId: locke.id,
+      content: 'Ум подобен чистому листу — опыт пишет на нём.',
+    },
+  });
+  const leibnizPost1 = await prisma.post.create({
+    data: {
+      userId: leibniz.id,
+      content: 'Мы живём в лучшем из возможных миров.',
+    },
+  });
+  const leibnizPost2 = await prisma.post.create({
+    data: {
+      userId: leibniz.id,
+      content: 'Настоящее чревато будущим, а прошлое присутствует в настоящем.',
+    },
+  });
+  const machiavelliPost1 = await prisma.post.create({
+    data: {
+      userId: machiavelli.id,
+      content:
+        'Лучше, чтобы тебя боялись, чем любили — если уж нельзя совместить и то и другое.',
+    },
+  });
+  const machiavelliPost2 = await prisma.post.create({
+    data: {
+      userId: machiavelli.id,
+      content:
+        'Цель оправдывает средства, но не всегда оправдывает того, кто их выбрал.',
+    },
+  });
+  const montesquieuPost1 = await prisma.post.create({
+    data: {
+      userId: montesquieu.id,
+      content:
+        'Чтобы не злоупотребляли властью, необходим такой порядок вещей, при котором различные власти могли бы взаимно сдерживать друг друга.',
+    },
+  });
+  const montesquieuPost2 = await prisma.post.create({
+    data: {
+      userId: montesquieu.id,
+      content: 'Свобода есть право делать всё, что дозволено законами.',
+    },
+  });
+  const rousseauPost1 = await prisma.post.create({
+    data: {
+      userId: rousseau.id,
+      content: 'Человек рождается свободным, но повсюду он в оковах.',
+    },
+  });
+  const rousseauPost2 = await prisma.post.create({
+    data: {
+      userId: rousseau.id,
+      content:
+        'Природа создала человека счастливым и добрым, но общество искажает его и делает несчастным.',
+    },
+  });
+  const voltairePost1 = await prisma.post.create({
+    data: {
+      userId: voltaire.id,
+      content:
+        'Я не согласен с тем, что вы говорите, но готов умереть за ваше право это говорить.',
+    },
+  });
+  const voltairePost2 = await prisma.post.create({
+    data: {
+      userId: voltaire.id,
+      content: 'Здравый смысл — не такая уж распространённая вещь.',
+    },
+  });
 
-  const posts = [senecaPost1, senecaPost2, senecaPost3, epictetusPost1, epictetusPost2, caligulaPost1, descartesPost1, descartesPost2, humePost1, humePost2, lockePost1, lockePost2, leibnizPost1, leibnizPost2, machiavelliPost1, machiavelliPost2, montesquieuPost1, montesquieuPost2, rousseauPost1, rousseauPost2, voltairePost1, voltairePost2];
+  const posts = [
+    senecaPost1,
+    senecaPost2,
+    senecaPost3,
+    epictetusPost1,
+    epictetusPost2,
+    caligulaPost1,
+    descartesPost1,
+    descartesPost2,
+    humePost1,
+    humePost2,
+    lockePost1,
+    lockePost2,
+    leibnizPost1,
+    leibnizPost2,
+    machiavelliPost1,
+    machiavelliPost2,
+    montesquieuPost1,
+    montesquieuPost2,
+    rousseauPost1,
+    rousseauPost2,
+    voltairePost1,
+    voltairePost2,
+  ];
 
   const philosophers = [
     seneca,

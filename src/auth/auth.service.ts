@@ -108,7 +108,9 @@ export class AuthService {
         email,
         role: Role.USER,
         passwordHash,
-        avatar: data.avatar?.trim() || 'default.jpg',
+        avatar:
+          data.avatar?.trim() ||
+          'https://res.cloudinary.com/dcposai6j/image/upload/v1778799272/default_zjntnx.png',
         bio: data.bio?.trim(),
       },
       select: { id: true, role: true },
