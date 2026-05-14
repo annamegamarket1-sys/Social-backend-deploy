@@ -9,7 +9,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { v2 as cloudinary } from 'cloudinary';
 import { Prisma, Role } from '@prisma/client';
 import { avatarUrl, coverUrl } from '../shared/paths';
-import { extractPublicId } from '../shared/upload';
+import { extractPublicId, uploadToCloudinary } from '../shared/upload';
 
 const publicUserSelect = {
   id: true,
@@ -139,13 +139,13 @@ export class UsersService {
 
     let oldAvatarPublicId: string | null = null;
     if (files.avatar) {
-      data.avatar = files.avatar.path;
+      data.avatar = await uploadToCloudinary(files.avatar.buffer, 'avatars');
       oldAvatarPublicId = extractPublicId(user.avatar);
     }
 
     let oldCoverPublicId: string | null = null;
     if (files.coverImage) {
-      data.coverImage = files.coverImage.path;
+      data.coverImage = await uploadToCloudinary(files.coverImage.buffer, 'covers');
       oldCoverPublicId = extractPublicId(user.coverImage);
     }
 

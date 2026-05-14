@@ -1,11 +1,7 @@
-import {
-  fieldFolderStorage,
-  imageFileFilter,
-  imageLimits,
-} from '../shared/upload';
+import { imageFileFilter, imageLimits, memStorage } from '../shared/upload';
 
 export const profileMulterConfig = {
-  storage: fieldFolderStorage({ avatar: 'avatars', coverImage: 'covers' }),
+  storage: memStorage,
   fileFilter: imageFileFilter,
   limits: imageLimits,
 };

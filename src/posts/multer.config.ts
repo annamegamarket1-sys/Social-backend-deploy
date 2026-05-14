@@ -1,11 +1,7 @@
-import {
-  imageFileFilter,
-  imageLimits,
-  singleFolderStorage,
-} from '../shared/upload';
+import { imageFileFilter, imageLimits, memStorage } from '../shared/upload';
 
 export const multerConfig = {
-  storage: singleFolderStorage('posts'),
+  storage: memStorage,
   fileFilter: imageFileFilter,
   limits: { ...imageLimits, files: 4 },
 };

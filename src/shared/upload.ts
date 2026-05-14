@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
+import { memoryStorage } from 'multer';
 import { v2 as cloudinary } from 'cloudinary';
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
 
 export const imageFileFilter = (
   req: any,
@@ -15,33 +15,25 @@ export const imageFileFilter = (
 
 export const imageLimits = { fileSize: 5 * 1024 * 1024 };
 
-/** Загружает все файлы в одну папку Cloudinary (например, 'posts'). */
-export const singleFolderStorage = (folder: string) =>
-  new CloudinaryStorage({
-    cloudinary,
-    params: {
-      folder,
-      allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
-      resource_type: 'image',
-    } as object,
-  });
+/** Multer хранит файл в памяти — буфер передаётся в uploadToCloudinary. */
+export const memStorage = memoryStorage();
 
-/**
- * Загружает файлы в разные папки в зависимости от имени поля.
- * Пример: { avatar: 'avatars', coverImage: 'covers' }
- */
-export const fieldFolderStorage = (mapping: Record<string, string>) =>
-  new CloudinaryStorage({
-    cloudinary,
-    params: (req: any, file: Express.Multer.File) => ({
-      folder: mapping[file.fieldname] ?? 'uploads',
-      allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
-      resource_type: 'image',
-    }),
+/** Загружает буфер файла в указанную папку Cloudinary, возвращает secure_url. */
+export const uploadToCloudinary = (
+  buffer: Buffer,
+  folder: string,
+): Promise<string> =>
+  new Promise((resolve, reject) => {
+    cloudinary.uploader
+      .upload_stream({ folder, resource_type: 'image' }, (error, result) => {
+        if (error || !result) return reject(error ?? new Error('Upload failed'));
+        resolve(result.secure_url);
+      })
+      .end(buffer);
   });
 
 /** Извлекает Cloudinary public_id из URL для последующего удаления. */
-export const extractPublicId = (url: string): string | null => {
+export const extractPublicId = (url: string | null): string | null => {
   if (!url?.startsWith('http')) return null;
   const match = url.match(/\/upload\/(?:v\d+\/)?(.+?)(?:\.[^.]+)?$/);
   return match?.[1] ?? null;

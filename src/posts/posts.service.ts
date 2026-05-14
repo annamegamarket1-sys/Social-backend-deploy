@@ -11,7 +11,7 @@ import { NotificationsService } from '../notifications/notifications.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { v2 as cloudinary } from 'cloudinary';
 import { avatarUrl, postImageUrl } from 'src/shared/paths';
-import { extractPublicId } from 'src/shared/upload';
+import { extractPublicId, uploadToCloudinary } from 'src/shared/upload';
 import {
   METRIC_LIKES,
   METRIC_POSTS_CREATED,
@@ -128,7 +128,9 @@ export class PostsService {
     data: CreatePostDto,
     files: Express.Multer.File[],
   ) {
-    const imagePaths = files?.map((file) => file.path) || [];
+    const imagePaths = files?.length
+      ? await Promise.all(files.map((f) => uploadToCloudinary(f.buffer, 'posts')))
+      : [];
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
     if (!user) {
       throw new NotFoundException('User not found');
