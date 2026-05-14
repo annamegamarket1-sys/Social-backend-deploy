@@ -3,6 +3,22 @@ import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
+const CDN = 'https://res.cloudinary.com/dcposai6j/image/upload';
+const avatars = {
+  default:     `${CDN}/v1778799272/default_zjntnx.png`,
+  seneka:      `${CDN}/v1778799271/seneka_jlykel.png`,
+  epictetus:   `${CDN}/v1778799272/epictetus_sybxnh.jpg`,
+  kaligula:    `${CDN}/v1778799271/kaligula_fwyxhk.png`,
+  decart:      `${CDN}/v1778799271/decart_ffzm8s.jpg`,
+  hume:        `${CDN}/v1778799271/hume_vaebit.jpg`,
+  john_lokk:   `${CDN}/v1778799271/john_lokk_rtks0r.jpg`,
+  leibniz:     `${CDN}/v1778799272/leibniz_gbpqjv.jpg`,
+  makiavelli:  `${CDN}/v1778799272/makiavelli_pftshb.jpg`,
+  montesquieu: `${CDN}/v1778799272/montesquieu_cy288z.jpg`,
+  russo:       `${CDN}/v1778799272/russo_uji2iy.jpg`,
+  volter:      `${CDN}/v1778799272/volter_ofmfla.jpg`,
+};
+
 async function main() {
   const hashedPassword = await bcrypt.hash('password123', 10);
 
@@ -19,7 +35,7 @@ async function main() {
       role: Role.ADMIN,
       passwordHash: adminPasswordHash,
       bio: 'Главный администратор платформы',
-      avatar: 'default.jpg',
+      avatar: avatars.default,
     },
   });
 
@@ -31,7 +47,7 @@ async function main() {
       role: Role.USER,
       passwordHash: hashedPassword,
       bio: 'Римский философ-стоик',
-      avatar: 'seneka.png',
+      avatar: avatars.seneka,
     },
   });
 
@@ -43,7 +59,7 @@ async function main() {
       role: Role.USER,
       passwordHash: hashedPassword,
       bio: 'Греческий философ-стоик',
-      avatar: 'epictetus.png',
+      avatar: avatars.epictetus,
     },
   });
 
@@ -55,7 +71,7 @@ async function main() {
       role: Role.USER,
       passwordHash: hashedPassword,
       bio: 'Римский император и философ',
-      avatar: 'kaligula.png',
+      avatar: avatars.kaligula,
     },
   });
 
@@ -67,7 +83,7 @@ async function main() {
       role: Role.USER,
       passwordHash: hashedPassword,
       bio: 'Французский философ и математик',
-      avatar: 'decart.jpg',
+      avatar: avatars.decart,
     },
   });
 
@@ -79,7 +95,7 @@ async function main() {
       role: Role.USER,
       passwordHash: hashedPassword,
       bio: 'Шотландский философ-эмпирик',
-      avatar: 'hume.jpg',
+      avatar: avatars.hume,
     },
   });
 
@@ -91,7 +107,7 @@ async function main() {
       role: Role.USER,
       passwordHash: hashedPassword,
       bio: 'Английский философ, основатель либерализма',
-      avatar: 'john_lokk.jpg',
+      avatar: avatars.john_lokk,
     },
   });
 
@@ -103,7 +119,7 @@ async function main() {
       role: Role.USER,
       passwordHash: hashedPassword,
       bio: 'Немецкий философ и математик',
-      avatar: 'leibniz.jpg',
+      avatar: avatars.leibniz,
     },
   });
 
@@ -115,7 +131,7 @@ async function main() {
       role: Role.USER,
       passwordHash: hashedPassword,
       bio: 'Итальянский мыслитель эпохи Возрождения',
-      avatar: 'makiavelli.jpg',
+      avatar: avatars.makiavelli,
     },
   });
 
@@ -127,7 +143,7 @@ async function main() {
       role: Role.USER,
       passwordHash: hashedPassword,
       bio: 'Французский философ-просветитель',
-      avatar: 'montesquieu.jpg',
+      avatar: avatars.montesquieu,
     },
   });
 
@@ -139,7 +155,7 @@ async function main() {
       role: Role.USER,
       passwordHash: hashedPassword,
       bio: 'Французский мыслитель эпохи Просвещения',
-      avatar: 'russo.jpg',
+      avatar: avatars.russo,
     },
   });
 
@@ -151,7 +167,7 @@ async function main() {
       role: Role.USER,
       passwordHash: hashedPassword,
       bio: 'Французский философ-просветитель и писатель',
-      avatar: 'volter.jpg',
+      avatar: avatars.volter,
     },
   });
 
@@ -163,7 +179,7 @@ async function main() {
       role: Role.USER,
       passwordHash: hashedPassword,
       bio: 'Тестовый пользователь',
-      avatar: 'default.jpg',
+      avatar: avatars.default,
     },
   });
 
