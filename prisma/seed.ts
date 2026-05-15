@@ -1,8 +1,8 @@
 import { PrismaClient, Role } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 
-const prisma = new PrismaClient();
-//res.cloudinary.com/dcposai6j/image/upload
+const prisma = new PrismaClient(); //res.cloudinary.com/dcposai6j/image/upload
+const CDN = 'https://res.cloudinary.com/dcposai6j/image/upload';
 const avatars = {
   default: `${CDN}/v1778799272/default_zjntnx.png`,
   seneka: `${CDN}/v1778799271/seneka_jlykel.png`,
